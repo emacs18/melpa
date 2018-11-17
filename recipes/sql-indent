@@ -1,0 +1,1 @@
+(sql-indent :fetcher github :repo "alex-hhh/emacs-sql-indent" :files ("sql-indent.el"))
