@@ -3,7 +3,7 @@ TOP := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 -include ./config.mk
 
 SHELL         := bash
-EMACS_COMMAND ?= emacs
+EMACS_COMMAND ?= /u/kimr/opt/emacs27/bin/emacs
 
 PKGDIR  := packages
 RCPDIR  := recipes
@@ -46,8 +46,10 @@ index: json
 
 ## Cleanup rules
 clean-working:
-	@echo " • Removing package sources ..."
-	@git clean -dffX $(WORKDIR)/.
+# kimr: all git clones of packages are persistent, because custom changes may
+# be made in some of them.
+#	@echo " • Removing package sources ..."
+#	@git clean -dffX $(WORKDIR)/.
 
 clean-packages:
 	@echo " • Removing packages ..."
@@ -72,11 +74,14 @@ add-package-build-remote:
 
 clean: clean-working clean-packages clean-json clean-sandbox
 
-packages: $(RCPDIR)/*
+packages: $(patsubst %,$(RCPDIR)/%,$(KIMR_PACKAGES))
 
 packages/archive-contents: .FORCE
 	@echo " • Updating $@ ..."
 	@$(EVAL) '(package-build-dump-archive-contents)'
+	@time $(EVAL) '(progn (find-file "packages/archive-contents") (emacs-lisp-mode) (pp-buffer) (save-buffer))'
+# Above pretty-prints archive-contents file so that instead of being one giant
+# line, it is human readable.
 
 cleanup:
 	@$(EVAL) '(package-build-cleanup)'
