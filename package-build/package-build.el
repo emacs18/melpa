@@ -274,12 +274,17 @@ is used instead."
      ((and (file-exists-p (expand-file-name ".git" dir))
            (string-equal (package-build--used-url rcp) url))
       (package-build--message "Updating %s" dir)
-      (package-build--run-process dir nil "git" "fetch" "-f" "--all" "--tags")
-      ;; We later checkout "origin/HEAD".  Sadly "git fetch" cannot
-      ;; be told to keep it up-to-date, so we have to make a second
-      ;; request.
-      (package-build--run-process dir nil "git" "remote" "set-head"
-                                  "origin" "--auto"))
+      ;; (package-build--run-process dir nil "git" "fetch" "-f" "--all" "--tags")
+      ;; ;; We later checkout "origin/HEAD".  Sadly "git fetch" cannot
+      ;; ;; be told to keep it up-to-date, so we have to make a second
+      ;; ;; request.
+      ;; (package-build--run-process dir nil "git" "remote" "set-head"
+      ;;                             "origin" "--auto"))
+      ;;
+      ;; Use the existing files rather than updating packages. I update them
+      ;; manually.
+      t
+      )
      (t
       (when (file-exists-p dir)
         (delete-directory dir t))
