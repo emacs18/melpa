@@ -1,1 +1,1 @@
-(ox-gfm :fetcher github :repo "larstvei/ox-gfm")
+(ox-gfm :fetcher github :repo "syl20bnr/ox-gfm")

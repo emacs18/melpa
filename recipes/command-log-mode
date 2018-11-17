@@ -1,1 +1,1 @@
-(command-log-mode :fetcher github :repo "lewang/command-log-mode")
+(command-log-mode :fetcher github :repo "bmag/command-log-mode" :branch "color")
