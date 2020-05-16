@@ -35,7 +35,6 @@ company-anaconda
 company-c-headers
 company-lsp
 company-quickhelp
-company-rtags
 company-shell
 company-statistics
 company-web
@@ -108,7 +107,6 @@ flycheck-bashate
 flycheck-elsa
 flycheck-package
 flycheck-pos-tip
-flycheck-rtags
 flycheck-ycmd
 flyspell-correct
 flyspell-correct-helm
@@ -155,7 +153,6 @@ helm-org-rifle
 helm-projectile
 helm-purpose
 helm-pydoc
-helm-rtags
 helm-swoop
 helm-themes
 helm-xref
@@ -263,7 +260,6 @@ rainbow-delimiters
 request
 request-deferred
 restart-emacs
-rtags
 s
 sass-mode
 scss-mode
