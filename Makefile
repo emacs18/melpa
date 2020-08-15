@@ -3,7 +3,7 @@ TOP := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 -include ./config.mk
 
 SHELL         := bash
-EMACS_COMMAND ?= /u/kimr/opt/emacs27/bin/emacs
+EMACS_COMMAND ?= /u/kimr/opt/emacs27/latest/bin/emacs
 
 PKGDIR  := packages
 RCPDIR  := recipes
