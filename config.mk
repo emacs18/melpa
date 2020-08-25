@@ -54,9 +54,14 @@ rebase :
 list :
 	@echo "List all changes made since $(SITE_BRANCH) ..."
 	@for pkg in $(KIMR_PACKAGES); do \
+	  if [ -f $(PWD)/working/$$pkg/.branch-name ]; then \
+	    branch=`cat $(PWD)/working/$$pkg/.branch-name`; \
+	  else \
+	    branch=master; \
+	  fi; \
 	  if [ -d $(PWD)/working/$$pkg/.git ] ; then \
 	    cd $(PWD)/working/$$pkg; \
-	    if ! git diff --quiet $(SITE_BRANCH) master; then \
+	    if ! git diff --quiet $(SITE_BRANCH) $$branch; then \
 	      echo ""; \
 	      echo "$$pkg"; \
 	      git log --oneline --graph --format='%ai %h %an %s' -9 $(SITE_BRANCH)..HEAD; \
@@ -95,7 +100,12 @@ pull :
 	  if [ -d $(PWD)/working/$$pkg/.git ] ; then \
 	    echo "Updating working/$$pkg ..."; \
 	    cd $(PWD)/working/$$pkg; \
-	    git checkout master; \
+	    if [ -f .branch-name ]; then \
+	      branch=`cat .branch-name`; \
+	    else \
+	      branch=master; \
+	    fi; \
+	    git checkout $$branch; \
 	    git pull; \
 	  elif [ -d $(PWD)/working/$$pkg ] ; then \
 	    echo "Warning: $$pkg is not a git repo"; \
