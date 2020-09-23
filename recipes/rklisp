@@ -1,0 +1,4 @@
+(rklisp
+  :fetcher git
+  :url "/u/kimr/repos/my/rklisp"
+  :files ("*.el"))
