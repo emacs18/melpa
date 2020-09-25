@@ -3,6 +3,7 @@
  :repo "vedang/pdf-tools"
  :files ("lisp/*.el"
          "README"
-         ("build" "Makefile")
-         ("build" "server")
+         ;; Prevent running of "yum" command on RH 6!
+         ;; ("build" "Makefile")
+         ;; ("build" "server")
          (:exclude "lisp/tablist.el" "lisp/tablist-filter.el")))
