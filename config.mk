@@ -16,6 +16,9 @@ KIMR_PACKAGES = $(shell cat package-list)
 # This is rebased requently!
 SITE_BRANCH = site
 
+# File containing main branch name if not "master".
+MAIN_BRANCH_FILE = .branch-name
+
 kimr : packages/archive-contents
 	cp -a packages/* ../melpa-packages
 
@@ -41,8 +44,8 @@ rebase :
 	    echo "Rebasing '$(SITE_BRANCH)' for working/$$pkg ..."; \
 	    cd $(PWD)/working/$$pkg; \
 	    git checkout $(SITE_BRANCH); \
-	    if [ -f .site-branch ]; then \
-	      parent_branch=`cat .site-branch`; \
+	    if [ -f $(MAIN_BRANCH_FILE) ]; then \
+	      parent_branch=`cat $(MAIN_BRANCH_FILE)`; \
 	    else \
 	      parent_branch=master; \
 	    fi; \
@@ -54,8 +57,8 @@ rebase :
 list :
 	@echo "List all changes made since $(SITE_BRANCH) ..."
 	@for pkg in $(KIMR_PACKAGES); do \
-	  if [ -f $(PWD)/working/$$pkg/.branch-name ]; then \
-	    branch=`cat $(PWD)/working/$$pkg/.branch-name`; \
+	  if [ -f $(PWD)/working/$$pkg/$(MAIN_BRANCH_FILE) ]; then \
+	    branch=`cat $(PWD)/working/$$pkg/$(MAIN_BRANCH_FILE)`; \
 	  else \
 	    branch=master; \
 	  fi; \
@@ -79,6 +82,8 @@ list-site :
 		PARENT=gh-pages; \
 	    elif [ $$pkg = neotree ]; then \
 		PARENT=dev; \
+	    elif [ $$pkg = ox-jira ]; then \
+		PARENT=trunk; \
 	    elif [ $$pkg = rcirc-styles ]; then \
 		PARENT=develop; \
 	    else \
@@ -100,8 +105,8 @@ pull :
 	  if [ -d $(PWD)/working/$$pkg/.git ] ; then \
 	    echo "Updating working/$$pkg ..."; \
 	    cd $(PWD)/working/$$pkg; \
-	    if [ -f .branch-name ]; then \
-	      branch=`cat .branch-name`; \
+	    if [ -f $(MAIN_BRANCH_FILE) ]; then \
+	      branch=`cat $(MAIN_BRANCH_FILE)`; \
 	    else \
 	      branch=master; \
 	    fi; \
