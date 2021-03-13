@@ -166,7 +166,7 @@ diff :
 	    echo "Diff working/$$pkg ..."; \
 	    cd $(PWD)/working/$$pkg; \
 	    git checkout $(SITE_BRANCH); \
-	    git diff master; \
+	    git diff -R master; \
 	  elif [ -d $(PWD)/working/$$pkg ] ; then \
 	    echo "Warning: $$pkg is not a git repo"; \
 	  else \
