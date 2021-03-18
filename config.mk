@@ -194,10 +194,15 @@ updated-packages :
 	  fi; \
 	  cd $(PWD)/working/$$pkg; \
 	  if ! git rev-parse --verify $(SITE_BRANCH) > /dev/null; then \
-	    echo "Warning: $$pkg does not have $(SITE_BRANCH) branch"; \
-	    continue; \
+	    echo "Info: created $(SITE_BRANCH) branch for $$pkg"; \
+	    git checkout -b $(SITE_BRANCH); \
 	  fi; \
-	  if git diff --quiet $(SITE_BRANCH) master; then \
+	  if [ -f $(MAIN_BRANCH_FILE) ]; then \
+	    parent_branch=`cat $(MAIN_BRANCH_FILE)`; \
+	  else \
+	    parent_branch=master; \
+	  fi; \
+	  if git diff --quiet $(SITE_BRANCH) $${parent_branch}; then \
 	    continue; \
 	  fi; \
 	  echo ""; \
